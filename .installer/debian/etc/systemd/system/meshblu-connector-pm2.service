@@ -3,14 +3,20 @@ Description=Meshblu Connector PM2
 Requires=network.target
 
 [Service]
-Type=simple
-EnvironmentFile=/etc/default/meshblu-connector-pm2
-WorkingDirectory=/usr/share/meshblu-connector-pm2
-ExecStart=/usr/local/bin/meshblu-connector-pm2 resurrect
-ExecReload=/bin/kill -HUP $MAINPID
-Restart=always
+Type=forking
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
 User=meshblu-connector-pm2
 PermissionsStartOnly=true
+PIDFile=/var/run/meshblu-connector-pm2/pm2.pid
+Environment=PM2_HOME=/var/run/meshblu-connector-pm2
+Environment=MESHBLU_CONNECTOR_HOME=/usr/share/meshblu-connector-pm2
+
+ExecStart=/usr/local/bin/meshblu-connector-pm2 resurrect
+ExecStartPost=/usr/local/bin/meshblu-connector-configurator-loader
+ExecReload=/usr/local/bin/meshblu-connector-pm2 reload all
+ExecStop=/usr/local/bin/meshblu-connector-pm2 kill
 
 [Install]
 WantedBy=multi-user.target

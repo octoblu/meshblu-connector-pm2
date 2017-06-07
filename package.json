@@ -7,9 +7,15 @@
   "license": "MIT",
   "scripts": {
     "build": "./build.sh",
-    "package": "pkg --config ./config.js --out-dir ./deploy ./project/bin/pm2"
+    "package": "npm run package:pm2 && npm run package:configurator-loader",
+    "package:pm2": "pkg --config ./pm2-config.js --out-dir ./deploy ./project/bin/pm2",
+    "package:configurator-loader": "pkg --config ./configurator-loader-config.js --out-dir ./deploy ./meshblu-connector-configurator-loader.js"
   },
   "devDependencies": {
     "pkg": "^4.0.0"
+  },
+  "dependencies": {
+    "executable": "^4.1.0",
+    "glob": "^7.1.2"
   }
 }
