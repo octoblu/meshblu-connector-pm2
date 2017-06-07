@@ -1,0 +1,7 @@
+Package: meshblu-connector-pm2
+Version: 1.0.0-1
+Section: base
+Priority: optional
+Architecture: armhf
+Maintainer: Octoblu, Inc. <npm@octoblu.com>
+Description: Meshblu Connector PM2

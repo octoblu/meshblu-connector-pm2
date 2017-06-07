@@ -1,0 +1,16 @@
+[Unit]
+Description=Meshblu Connector PM2
+Requires=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/meshblu-connector-pm2
+WorkingDirectory=/usr/share/meshblu-connector-pm2
+ExecStart=/usr/local/bin/meshblu-connector-pm2 resurrect
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+User=meshblu-connector-pm2
+PermissionsStartOnly=true
+
+[Install]
+WantedBy=multi-user.target
