@@ -24,6 +24,13 @@ const CLI_OPTIONS = [
     help: "Base location of meshblu connectors",
     helpArg: "PATH",
   },
+  {
+    names: ["pm2-home"],
+    type: "string",
+    env: "PM2_HOME",
+    help: "Base location of meshblu-connector-pm2",
+    helpArg: "PATH",
+  },
 ]
 
 class MeshbluConnectorConfiguratorLoaderCommand {
@@ -59,19 +66,20 @@ class MeshbluConnectorConfiguratorLoaderCommand {
 
   async run() {
     const options = this.parseArgv({ argv: this.argv })
-    const { connector_home } = options
+    const { connector_home, pm2_home } = options
     var errors = []
     if (!connector_home) errors.push(new Error("MeshbluConnectorCommand requires --connector-home or MESHBLU_CONNECTOR_HOME"))
+    if (!pm2_home) errors.push(new Error("MeshbluConnectorCommand requires --pm2-home or PM2_HOME"))
 
     if (errors.length) {
-      console.log(`usage: meshblu-connector-confirator-loader [OPTIONS]\noptions:\n${this.parser.help({ includeEnv: true })}`)
+      console.log(`usage: meshblu-connector-configurator-loader [OPTIONS]\noptions:\n${this.parser.help({ includeEnv: true })}`)
       errors.forEach(error => {
         console.error(chalk.red(error.message))
       })
       process.exit(1)
     }
 
-    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome: connector_home })
+    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome: connector_home, pm2Home: pm2_home })
     try {
       await configuratorLoader.load()
     } catch (error) {

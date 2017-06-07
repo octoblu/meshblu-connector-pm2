@@ -4,9 +4,10 @@ const glob = util.promisify(require("glob"))
 const executable = require("executable")
 const spawn = util.promisify(require("child_process").spawn)
 
-class MeshbluConnectorConfigurator {
-  constructor({ connectorHome }) {
+class MeshbluConnectorConfiguratorLoader {
+  constructor({ connectorHome, pm2Home }) {
     this.connectorHome = connectorHome
+    this.pm2Home = pm2Home
   }
 
   load() {
@@ -20,13 +21,14 @@ class MeshbluConnectorConfigurator {
     })
   }
 
-  daemonize(file) {
+  loadConfigurator(file) {
     return executable(file).then(isExecutable => {
       if (!isExecutable) return
-      options = {
+      const options = {
         detached: true,
         stdio: "ignore",
         env: {
+          PM2_HOME: this.pm2Home,
           MESHBLU_CONNECTOR_HOME: this.connectorHome,
         },
       }
@@ -35,4 +37,4 @@ class MeshbluConnectorConfigurator {
   }
 }
 
-module.exports.MeshbluConnectorConfigurator = MeshbluConnectorConfigurator
+module.exports.MeshbluConnectorConfiguratorLoader = MeshbluConnectorConfiguratorLoader
