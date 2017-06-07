@@ -1,0 +1,15 @@
+{
+  "name": "pkg-pm2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:octoblu/pkg-pm2.git",
+  "author": "Octoblu, Inc <npm@octoblu.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "./build.sh",
+    "package": "pkg --config ./config.js --out-dir ./deploy ./project/bin/pm2"
+  },
+  "devDependencies": {
+    "pkg": "^4.0.0"
+  }
+}
