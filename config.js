@@ -1,5 +1,8 @@
 module.exports = {
   scripts: [
-    'lib/ProcessContainerFork.js'
+    'project/lib/ProcessContainerFork.js',
+  ],
+  assets: [
+    'project/lib/templates/**/*.tpl'
   ]
 }

@@ -13,7 +13,11 @@ prep() {
 
 download_pm2() {
   local url="https://github.com/Unitech/pm2/archive/${PM2_VERSION}.tar.gz"
-  curl --fail --location "$url" --output "./project/${PM2_VERSION}.tar.gz"
+  curl --fail \
+    --location \
+    --silent \
+    "$url" \
+    --output "./project/${PM2_VERSION}.tar.gz"
 }
 
 unpack_pm2() {
