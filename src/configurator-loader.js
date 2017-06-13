@@ -28,6 +28,7 @@ class MeshbluConnectorConfiguratorLoader {
         detached: true,
         stdio: "ignore",
         env: {
+          PATH: process.env.PATH,
           PM2_HOME: this.pm2Home,
           MESHBLU_CONNECTOR_HOME: this.connectorHome,
         },
