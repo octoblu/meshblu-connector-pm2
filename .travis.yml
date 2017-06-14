@@ -1,0 +1,78 @@
+branches:
+  only:
+  - "/^v[0-9]/"
+env:
+  global:
+  - secure: wrUAn1phU0aUINzimgc0gHv8qU4n9j1lBiloaLzNVWrTHSXlkg8qhKlIDG/Z/g5Ln/z6lGQEvOaloBFEG6nRFANgxrEC8QKUNFIrEr2R/serpb41moEWZc4pqOMlwS5jG9ObFs3pg2v9soGxeNKs7hxpG0jVj0vX1OwaGhpc7wmVyeJd5ir6C5zHnpauPhsucfe86tnb0DqvDd0hpDGx+fOdYzb0OdPIye7LwEAmEJenwaeL8aGR4TnFGyr5WbXPra0ae3sgmjKT1sU3yFYi/L5lnlceiLddNWXN6UNZxWA5qsuSpAavw7gLUE5pgYRIr6C3N8NutCm06nqvfpBNwzmPDa+7v7d3SleJYfP1gcoLq2bAtA0miPHRiydSLbpv110kyYLz9qsnQC11ENgwfxZMTveVM2rRyO7dH6tVF3efHE8Fz63RZAHgmtBswVTyOR1I1eAQ28aB7u0hF3fBGpCvyNW81ZaO4jfBKoot+Qqr0p7Ka8/WmzWTD9n7h1/g1d45UgFSQrhAi/ziyFeXwhFr1BzSaiXYnzUcNKf9udA6Mh4oH1K0Ruy706w/cOtQ2F7CIgbcoVrWVf8OIMbvPd5PqHUGPgIRHwTroKD7aXY4VEtAzZrL7MuV8z5hPnx46jCpxicSBsyYXaEGlif8J2Fd6S23u3d8KUydOHgJnmc=
+  - secure: mRuMUp5qdQPcEo1OBKB3mzkOgtSmDkAT0qzDITrniCrG7jxes9ITXgMZiuNjxSYGSrEw8DPvZPcE5ehuQL238wCzR2os+MZLnl1hTIa/rMIWSXvJdHhreBLFJNULrjO1yWTWf34YmwPi2j7HxI4jpwIAO8oZmhmo4NzeWh7nHHy8vrl8vzN9omCm3aAudkWV4mBBxPlo+DmqhB4woTGCKIfYiH1JMUmzitDCJZ77qvUbE8ZdTSfp+yRON7LuLH7NMtECZOXeZDN8ZDLHQaHtU3okjrLqGtr6xnZccuhDo+oVOpDZKLkn95J5ftRAHneYIr/ek1CGgF2KFOwDKU6c+nReXspW+fVv39jdruRiskki4rbK0mHZYIlgp8A0ZszYQGk4rpDaaoHFouwtuZRLxpJ9vmLp8Fj2UlHC1Pr+7fESpVhDuB6xVDac6slKGF4Cp84+m+Qkfs96ZZdORfmXwjaSNzg6tN+4hrTjtyHU89X2WPVxZVwhQTyr/L99NOBHlyO0bRw5Fahw7a6Hyyw1N8hsIWgcfvBvm4jlQCV9GPKmMrspP+PC+XCeRdAfd0JKMtIONh2idSMDo8IHeLE42zfev/KjzFv4M3FwEXa0v1YlSLfE1zvUU925qiYVSaBectwI0TAutK1d3NxP0MY2s7uVajdIYPAU8/ItMsic2qQ=
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+    language: shell
+    sudo: required
+    services:
+    - docker
+    install:
+    - docker pull octoblu/meshblu-connector-builder:linux-armv7
+    script:
+    - |
+      docker run --rm --volume $PWD:/work \
+        --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+        --env TRAVIS_BRANCH=$TRAVIS_BRANCH \
+        --env MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN=$MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN \
+        octoblu/meshblu-connector-builder:linux-armv7 \
+          bash -c 'export HOME=/tmp/cache \
+            && meshblu-connector-pkger \
+            && meshblu-connector-installer-debian --destination-path=/usr/local/bin \
+            && meshblu-connector-uploader-github \
+          '
+  - os: linux
+    dist: trusty
+    language: shell
+    sudo: required
+    services:
+    - docker
+    install:
+    - docker pull octoblu/meshblu-connector-builder:linux-x86
+    script:
+    - |
+      docker run --rm --volume $PWD:/work \
+        --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+        --env TRAVIS_BRANCH=$TRAVIS_BRANCH \
+        --env MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN=$MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN \
+        octoblu/meshblu-connector-builder:linux-x86 \
+          bash -c 'export HOME=/tmp/cache \
+            && meshblu-connector-pkger \
+            && meshblu-connector-installer-debian --destination-path=/usr/local/bin \
+            && meshblu-connector-uploader-github \
+          '
+  - os: linux
+    dist: trusty
+    language: shell
+    sudo: required
+    services:
+    - docker
+    install:
+    - docker pull octoblu/meshblu-connector-builder:linux-x64
+    script:
+    - |
+      docker run --rm --volume $PWD:/work \
+        --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+        --env TRAVIS_BRANCH=$TRAVIS_BRANCH \
+        --env MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN=$MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN \
+        octoblu/meshblu-connector-builder:linux-x64 \
+          bash -c 'export HOME=/tmp/cache \
+            && meshblu-connector-pkger \
+            && meshblu-connector-installer-debian --destination-path=/usr/local/bin \
+            && meshblu-connector-uploader-github \
+          '
+  - os: osx
+    node_js: '8'
+    language: node_js
+    after_success:
+    - yarn global add meshblu-connector-pkger meshblu-connector-installer-macos meshblu-connector-uploader-github
+    - |
+      meshblu-connector-pkger \
+      && meshblu-connector-installer-macos --destination-path=/Library/MeshbluConnectors/bin \
+      && meshblu-connector-uploader-github

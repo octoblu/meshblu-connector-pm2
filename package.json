@@ -1,21 +1,31 @@
 {
-  "name": "pkg-pm2",
+  "name": "meshblu-connector-pm2",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:octoblu/pkg-pm2.git",
+  "repository": "git@github.com:octoblu/meshblu-connector-pm2.git",
   "author": "Octoblu, Inc <npm@octoblu.com>",
   "license": "MIT",
-  "scripts": {
-    "build": "./build.sh",
-    "package": "npm run package:pm2 && npm run package:configurator-loader",
-    "package:pm2": "pkg --config ./pm2-config.js --out-dir ./deploy ./project/bin/pm2",
-    "package:configurator-loader": "pkg --config ./configurator-loader-config.js --out-dir ./deploy ./meshblu-connector-configurator-loader.js"
+  "bin": {
+    "meshblu-connector-pm2": "./command.js",
+    "meshblu-connector-configurator-loader": "./meshblu-connector-configurator-loader.js"
   },
-  "devDependencies": {
-    "pkg": "^4.0.0"
+  "scripts": {
+    "test": "exit 0",
+    "build": "cp -rfp override_node_modules/* node_modules"
+  },
+  "pkg": {
+    "scripts": [
+      "node_modules/pm2/lib/ProcessContainerFork.js"
+    ],
+    "assets": [
+      "node_modules/pm2/lib/templates/**/*.tpl",
+      "node_modules/pm2/lib/keymetrics",
+      "node_modules/pm2/lib/keymetrics.bkcp"
+    ]
   },
   "dependencies": {
     "executable": "^4.1.0",
-    "glob": "^7.1.2"
+    "glob": "^7.1.2",
+    "pm2": "^2.5.0"
   }
 }

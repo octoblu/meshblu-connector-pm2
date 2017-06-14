@@ -13,9 +13,9 @@
 set -u
 
 SCRIPT="/usr/local/bin/meshblu-connector-pm2 resurrect"
-USER="meshblu-connector-pm2"
+USER="meshblu-connectors"
 NAME="meshblu-connector-pm2"
-WORKING_DIRECTORY="/usr/share/meshblu-connector-pm2"
+WORKING_DIRECTORY="/usr/share/meshblu-connectors"
 DESCRIPTION="Meshblu Connector PM2" 
 
 . /lib/lsb/init-functions
@@ -25,7 +25,7 @@ LOGDIR="/var/log/meshblu-connector-pm2"
 LOGFILE="$LOGDIR/run.log"
 
 mkdir -p "$LOGDIR"
-chown -R "meshblu-connector-pm2:meshblu-connector-pm2" "$LOGDIR"
+chown -R "meshblu-connectors:meshblu-connectors" "$LOGDIR"
 
 do_start() {
   start-stop-daemon --start \
