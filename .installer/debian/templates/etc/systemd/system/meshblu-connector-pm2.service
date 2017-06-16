@@ -13,8 +13,7 @@ PIDFile=/var/run/meshblu-connector-pm2/pm2.pid
 Environment=PM2_HOME=/var/run/meshblu-connector-pm2
 Environment=MESHBLU_CONNECTOR_HOME=/usr/share/meshblu-connectors
 
-ExecStart=/usr/local/bin/meshblu-connector-pm2 resurrect
-ExecStartPost=/usr/local/bin/meshblu-connector-configurator-loader
+ExecStart=/usr/local/bin/meshblu-connector-configurator-loader
 ExecReload=/usr/local/bin/meshblu-connector-pm2 reload all
 ExecStop=/usr/local/bin/meshblu-connector-pm2 kill
 

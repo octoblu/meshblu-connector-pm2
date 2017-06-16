@@ -12,7 +12,7 @@
 
 set -u
 
-SCRIPT="/usr/local/bin/meshblu-connector-pm2 resurrect"
+SCRIPT="/usr/local/bin/meshblu-connector-configurator-loader"
 USER="meshblu-connectors"
 NAME="meshblu-connector-pm2"
 WORKING_DIRECTORY="/usr/share/meshblu-connectors"
