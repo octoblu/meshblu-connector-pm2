@@ -78,13 +78,16 @@ class MeshbluConnectorConfiguratorLoaderCommand {
       process.exit(1)
     }
 
+    // be sure to set PM2_HOME for pm2 node library
+    process.env.PM2_HOME = pm2_home
+
     const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome: path.resolve(connector_home), pm2Home: pm2_home })
     try {
       await configuratorLoader.load()
     } catch (error) {
       this.die(error)
     }
-    // process.exit(0)
+    process.exit(0)
   }
 
   die(error) {
