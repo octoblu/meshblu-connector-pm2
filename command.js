@@ -1,91 +1,54 @@
 #!/usr/bin/env node
-const dashdash = require("dashdash")
+const OctoDash = require("octodash")
 const path = require("path")
-const chalk = require("chalk")
 const untildify = require("untildify")
+const packageJSON = require("./package.json")
 const { MeshbluConnectorConfiguratorLoader } = require("./lib/configurator-loader")
 
 const CLI_OPTIONS = [
   {
-    name: "version",
-    type: "bool",
-    help: "Print connector version and exit.",
-  },
-  {
-    names: ["help", "h"],
-    type: "bool",
-    help: "Print this help and exit.",
-  },
-  {
     names: ["connector-home"],
     type: "string",
+    required: true,
     env: "MESHBLU_CONNECTOR_HOME",
     help: "Base location of meshblu connectors",
     helpArg: "PATH",
     default: ".",
+    completionType: "file",
   },
   {
     names: ["pm2-home"],
     type: "string",
     env: "PM2_HOME",
+    required: true,
     help: "Base location of meshblu-connector-pm2",
     helpArg: "PATH",
+    completionType: "file",
   },
 ]
 
 class MeshbluConnectorConfiguratorLoaderCommand {
-  constructor(options) {
-    if (!options) options = {}
-    var { argv, cliOptions } = options
-    if (!cliOptions) cliOptions = CLI_OPTIONS
-    if (!argv) return this.die(new Error("MeshbluConnectorConfiguratorLoaderCommand requires options.argv"))
-    this.argv = argv
-    this.cliOptions = cliOptions
-    this.parser = dashdash.createParser({ options: this.cliOptions })
-  }
-
-  parseArgv({ argv }) {
-    try {
-      var opts = this.parser.parse(argv)
-    } catch (e) {
-      return {}
-    }
-
-    if (opts.help) {
-      console.log(`usage: meshblu-connector-configurator-loader [OPTIONS]\noptions:\n${this.parser.help({ includeEnv: true, includeDefault: true })}`)
-      process.exit(0)
-    }
-
-    if (opts.version) {
-      console.log(this.packageJSON.version)
-      process.exit(0)
-    }
-
-    return opts
+  constructor({ argv, cliOptions = CLI_OPTIONS } = {}) {
+    this.octoDash = new OctoDash({
+      argv,
+      cliOptions,
+      name: packageJSON.name,
+      version: packageJSON.version,
+    })
   }
 
   run() {
-    const options = this.parseArgv({ argv: this.argv })
-    const { connector_home, pm2_home } = options
-    var errors = []
-    if (!connector_home) errors.push(new Error("MeshbluConnectorCommand requires --connector-home or MESHBLU_CONNECTOR_HOME"))
-    if (!pm2_home) errors.push(new Error("MeshbluConnectorCommand requires --pm2-home or PM2_HOME"))
-
-    if (errors.length) {
-      console.log(`usage: meshblu-connector-configurator-loader [OPTIONS]\noptions:\n${this.parser.help({ includeEnv: true, includeDefault: true })}`)
-      errors.forEach(error => {
-        console.error(chalk.red(error.message))
-      })
-      process.exit(1)
-    }
-
-    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome: path.resolve(connector_home), pm2Home: path.resolve(untildify(pm2_home)) })
+    const options = this.octoDash.parseOptions()
+    const { connectorHome, pm2Home } = options
+    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({
+      connectorHome: path.resolve(connectorHome),
+      pm2Home: path.resolve(untildify(pm2Home)),
+    })
     return configuratorLoader.load()
   }
 
   die(error) {
-    console.error(chalk.red("Meshblu Connector Loader Command: error: %s", error.message))
-    process.exit(1)
+    this.octoDash.die(error)
   }
 }
 
@@ -96,5 +59,5 @@ command
     command.die(error)
   })
   .then(() => {
-    process.exit(0)
+    command.die()
   })
