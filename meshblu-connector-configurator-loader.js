@@ -2,6 +2,7 @@
 const dashdash = require("dashdash")
 const path = require("path")
 const chalk = require("chalk")
+const untildify = require("untildify")
 const { MeshbluConnectorConfiguratorLoader } = require("./lib/configurator-loader")
 
 const CLI_OPTIONS = [
@@ -78,16 +79,8 @@ class MeshbluConnectorConfiguratorLoaderCommand {
       process.exit(1)
     }
 
-    // be sure to set PM2_HOME for pm2 node library
-    process.env.PM2_HOME = pm2_home
-
-    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome: path.resolve(connector_home), pm2Home: pm2_home })
-    try {
-      await configuratorLoader.load()
-    } catch (error) {
-      this.die(error)
-    }
-    process.exit(0)
+    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome: path.resolve(connector_home), pm2Home: path.resolve(untildify(pm2_home)) })
+    return configuratorLoader.load()
   }
 
   die(error) {
@@ -97,6 +90,11 @@ class MeshbluConnectorConfiguratorLoaderCommand {
 }
 
 const command = new MeshbluConnectorConfiguratorLoaderCommand({ argv: process.argv })
-command.run().catch(error => {
-  console.error(error)
-})
+command
+  .run()
+  .catch(error => {
+    command.die(error)
+  })
+  .then(() => {
+    process.exit(0)
+  })
