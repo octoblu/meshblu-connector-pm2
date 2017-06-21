@@ -64,7 +64,7 @@ class MeshbluConnectorConfiguratorLoaderCommand {
     return opts
   }
 
-  async run() {
+  run() {
     const options = this.parseArgv({ argv: this.argv })
     const { connector_home, pm2_home } = options
     var errors = []
