@@ -847,9 +847,9 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-octodash@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/octodash/-/octodash-1.2.0.tgz#91696d7fa8cfe4f8a34698fc609074cff67333f3"
+octodash@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/octodash/-/octodash-1.2.1.tgz#1bffc680c6d4b66824983c8149f5bb0afbae6c3c"
   dependencies:
     chalk "^1.1.3"
     dashdash "^1.14.1"
