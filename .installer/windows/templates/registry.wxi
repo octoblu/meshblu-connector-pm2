@@ -5,7 +5,7 @@
     <RegistryValue Id="MeshbluConnectorConfiguratorLoader.rst" Root="HKMU" Action="write"
                    Key="Software\Microsoft\Windows\CurrentVersion\Run"
                    Name="MeshbluConnectorConfiguratorLoader"
-                   Value="cmd /C &quot;[INSTALLDIR]meshblu-connector-configurator-loader.exe --pm2-home=[INSTALLDIR]..\meshblu-connector-pm2 --connector-home=[INSTALLDIR]..&quot;"
+                   Value="&quot;[INSTALLDIR]meshblu-connector-configurator-loader.exe&quot;"
                    Type="string" />
     <Condition>ASSISTANCE_START_VIA_REGISTRY</Condition>
   </Component>

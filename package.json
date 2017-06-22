@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-pm2",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "main": "index.js",
   "repository": "git@github.com:octoblu/meshblu-connector-pm2.git",
   "author": "Octoblu, Inc <npm@octoblu.com>",
