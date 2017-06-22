@@ -1,0 +1,4 @@
+<Include>
+  <IniFile Id="iniconnectorhome" Action="addLine" Directory="[INSTALLDIR]" Name="env.ini" Section="Environment" Key="MESHBLU_CONNECTOR_CONNECTOR_HOME" Value="[INSTALLDIR].." />
+  <IniFile Id="inipm2home" Action="addLine" Directory="[INSTALLDIR]" Name="env.ini" Section="Environment" Key="PM2_HOME" Value="[INSTALLDIR]..\meshblu-connector-pm2" />
+</Include>
