@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const OctoDash = require("octodash")
 const path = require("path")
-const untildify = require("untildify")
 const packageJSON = require("./package.json")
 const { MeshbluConnectorConfiguratorLoader } = require("./lib/configurator-loader")
 
@@ -19,7 +18,7 @@ const CLI_OPTIONS = [
   {
     names: ["pm2-home"],
     type: "string",
-    env: "PM2_HOME",
+    env: "MESHBLU_CONNECTOR_PM2_HOME",
     required: true,
     help: "Base location of meshblu-connector-pm2",
     helpArg: "PATH",
@@ -40,10 +39,7 @@ class MeshbluConnectorConfiguratorLoaderCommand {
   run() {
     const options = this.octoDash.parseOptions()
     const { connectorHome, pm2Home } = options
-    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({
-      connectorHome: path.resolve(connectorHome),
-      pm2Home: path.resolve(untildify(pm2Home)),
-    })
+    const configuratorLoader = new MeshbluConnectorConfiguratorLoader({ connectorHome, pm2Home })
     return configuratorLoader.load()
   }
 

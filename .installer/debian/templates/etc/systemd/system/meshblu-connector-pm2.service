@@ -10,7 +10,7 @@ LimitCORE=infinity
 User=meshblu-connectors
 PermissionsStartOnly=true
 PIDFile=/var/run/meshblu-connector-pm2/pm2.pid
-Environment=PM2_HOME=/var/run/meshblu-connector-pm2
+Environment=MESHBLU_CONNECTOR_PM2_HOME=/var/run/meshblu-connector-pm2
 Environment=MESHBLU_CONNECTOR_HOME=/usr/share/meshblu-connectors
 
 ExecStart=/usr/local/bin/meshblu-connector-configurator-loader

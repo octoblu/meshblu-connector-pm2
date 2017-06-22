@@ -3,4 +3,4 @@
 # Example:
 #   export NODE_ENV="production"
 
-export PM2_HOME="/var/run/meshblu-connector-pm2"
+export MESHBLU_CONNECTOR_PM2_HOME="/var/run/meshblu-connector-pm2"
