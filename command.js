@@ -55,5 +55,5 @@ command
     command.die(error)
   })
   .then(() => {
-    command.die()
+    process.exit(0)
   })
