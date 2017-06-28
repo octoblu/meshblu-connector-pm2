@@ -927,6 +927,12 @@ pm2-axon@3.0.2:
     debug "~2.2.0"
     escape-regexp "0.0.1"
 
+pm2-custom@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pm2-custom/-/pm2-custom-1.0.0.tgz#865fe98d0b8998c9b944148fcb164ddde22229d0"
+  dependencies:
+    pm2 "^2.5.0"
+
 pm2-deploy@^0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/pm2-deploy/-/pm2-deploy-0.3.5.tgz#d434bec7bcb1d3c8386a1234af5a3b6794016c1c"
