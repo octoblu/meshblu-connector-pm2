@@ -3,8 +3,8 @@ set -e
 set -o pipefail
 
 declare -r init_type='auto'
-declare -ri no_rebuild='0'
-declare -r install_strategy='auto'
+# declare -ri no_rebuild='0'
+# declare -r install_strategy='auto'
 
 add_user() {
   : "${1:?'User was not defined'}"
@@ -24,8 +24,8 @@ add_user() {
   if ! getent passwd | grep -q "^$user:"; then
     echo "Creating system user: $user in $group with $descr and shell $shell"
     useradd $uid_flags --gid $group --no-create-home --system --shell $shell -c "$descr" $user
-    usermod -a -G input $user
   fi
+  usermod -a -G input $user
 }
 
 add_group() {
@@ -76,15 +76,24 @@ start_service () {
   fi
 }
 
+echo ""
+echo "Please enter the username the service runs as. It will be"
+echo "created if it doesn't already exist. (Default meshblu-connectors)"
+echo -n "username: "
+read username
+
+username="${username:-meshblu-connectors}"
+
 add_group 'meshblu-connectors' ''
-add_user 'meshblu-connectors' '' 'meshblu-connectors' 'meshblu-connectors user-daemon' '/bin/false'
+add_user "$username" '' 'meshblu-connectors' 'meshblu-connectors user-daemon' '/bin/false'
 
 mkdir -p '/var/log/meshblu-connector-pm2'
 mkdir -p '/var/run/meshblu-connector-pm2'
 mkdir -p '/usr/share/meshblu-connectors'
-chown -R 'meshblu-connectors:meshblu-connectors' '/var/log/meshblu-connector-pm2'
-chown -R 'meshblu-connectors:meshblu-connectors' '/var/run/meshblu-connector-pm2'
-chown -R 'meshblu-connectors:meshblu-connectors' '/usr/share/meshblu-connectors'
+chown -R "$username:meshblu-connectors" '/var/log/meshblu-connector-pm2'
+chown -R "$username:meshblu-connectors" '/var/run/meshblu-connector-pm2'
+chown -R "$username:meshblu-connectors" '/usr/share/meshblu-connectors'
+sed -i='' -e "s/#POSTINSTALL_USER_HOOK/User=$username/" /etc/systemd/system/meshblu-connector-pm2.service
 
 if [[ "$init_type" != 'none' ]]; then
   start_service 'meshblu-connector-pm2'

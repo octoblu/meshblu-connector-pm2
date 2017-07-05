@@ -7,7 +7,7 @@ Type=forking
 LimitNOFILE=infinity
 LimitNPROC=infinity
 LimitCORE=infinity
-User=meshblu-connectors
+#POSTINSTALL_USER_HOOK
 PermissionsStartOnly=true
 PIDFile=/var/run/meshblu-connector-pm2/pm2.pid
 Environment=MESHBLU_CONNECTOR_PM2_HOME=/var/run/meshblu-connector-pm2

@@ -34,8 +34,8 @@ case "$1" in
   upgrade|remove|failed-upgrade|abort-upgrade|abort-install|disappear)
     ;;
   purge)
-    delete_user 'meshblu-connectors'
-    delete_group 'meshblu-connectors'
+    # delete_user 'meshblu-connectors'
+    # delete_group 'meshblu-connectors'
     rm -rf '/var/log/meshblu-connector-pm2'
     ;;
   *)
