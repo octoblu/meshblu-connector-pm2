@@ -11,6 +11,7 @@ if (process.pkg) execPath = path.dirname(process.execPath)
 const envIniFile = path.join(execPath, "env.ini")
 if (fs.existsSync(envIniFile)) {
   const parsedIni = ini.parse(fs.readFileSync(envIniFile, "utf-8"))
+  const parsedEnv = { parsed: {} }
   forEach(parsedIni.environment, (value, key) => {
     if (process.env[key]) return
     parsedEnv.parsed[key] = value
