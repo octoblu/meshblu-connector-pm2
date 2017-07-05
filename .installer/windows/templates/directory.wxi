@@ -11,6 +11,9 @@
             <CreateFolder />
             <IniFile Id="envini_connector_home" Action="addLine" Directory="INSTALLDIR" Name="env.ini" Section="environment" Key="MESHBLU_CONNECTOR_HOME" Value="[INSTALLDIR].." />
             <IniFile Id="envini_pm2_home" Action="addLine" Directory="INSTALLDIR" Name="env.ini" Section="environment" Key="MESHBLU_CONNECTOR_PM2_HOME" Value="$LOCALAPPDATA\Programs\MeshbluConnectors-$(var.InstallScope)\meshblu-connector-pm2" />
+            <IniFile Id="envini_pm2_daemon_rpc" Action="addLine" Directory="INSTALLDIR" Name="env.ini" Section="environment" Key="DAEMON_RPC_PORT" Value="\\.\pipe\MeshbluConnectors-$(var.InstallScope)-$USERNAME-rpc.sock" />
+            <IniFile Id="envini_pm2_daemon_pub" Action="addLine" Directory="INSTALLDIR" Name="env.ini" Section="environment" Key="DAEMON_PUB_PORT" Value="\\.\pipe\MeshbluConnectors-$(var.InstallScope)-$USERNAME-pub.sock" />
+            <IniFile Id="envini_pm2_interactor_rpc" Action="addLine" Directory="INSTALLDIR" Name="env.ini" Section="environment" Key="INTERACTOR_RPC_PORT" Value="\\.\pipe\MeshbluConnectors-$(var.InstallScope)-$USERNAME-interactor.sock" />
           </Component>
         </Directory>
       </Directory>
