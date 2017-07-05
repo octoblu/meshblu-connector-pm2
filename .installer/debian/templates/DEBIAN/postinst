@@ -76,11 +76,15 @@ start_service () {
   fi
 }
 
-echo ""
-echo "Please enter the username the service runs as. It will be"
-echo "created if it doesn't already exist. (Default meshblu-connectors)"
-echo -n "username: "
-read username
+username="$MESHBLU_CONNECTOR_PM2_USERNAME"
+
+if [ -z "$username" ]; then
+  echo ""
+  echo "Please enter the username the service runs as. It will be"
+  echo "created if it doesn't already exist. (Default meshblu-connectors)"
+  echo -n "username: "
+  read username
+fi
 
 username="${username:-meshblu-connectors}"
 
