@@ -12,8 +12,11 @@ const envIniFile = path.join(execPath, "env.ini")
 if (fs.existsSync(envIniFile)) {
   const parsedIni = ini.parse(fs.readFileSync(envIniFile, "utf-8"))
   forEach(parsedIni.environment, (value, key) => {
+    if (process.env[key]) return
+    parsedEnv.parsed[key] = value
     process.env[key] = value
   })
+  dotenvExpand(parsedEnv)
 }
 
 const envFile = path.join(execPath, ".env")
