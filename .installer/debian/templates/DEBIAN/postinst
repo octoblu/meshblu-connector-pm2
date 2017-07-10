@@ -98,6 +98,7 @@ chown -R "$username:meshblu-connectors" '/var/log/meshblu-connector-pm2'
 chown -R "$username:meshblu-connectors" '/var/run/meshblu-connector-pm2'
 chown -R "$username:meshblu-connectors" '/usr/share/meshblu-connectors'
 sed -i='' -e "s/#POSTINSTALL_USER_HOOK/User=$username/" /etc/systemd/system/meshblu-connector-pm2.service
+sed -i='' -e "s/|POSTINSTALL_USER_HOOK|/$username/" /etc/tmpfiles.d/meshblu-connector-pm2.conf
 
 if [[ "$init_type" != 'none' ]]; then
   start_service 'meshblu-connector-pm2'
