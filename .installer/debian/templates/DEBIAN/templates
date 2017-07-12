@@ -1,0 +1,5 @@
+Template: meshblu-connector-pm2/username
+Type: string
+Default: meshblu-connectors
+Description: The username the service runs as.
+ It will be created if it doesn't already exist.

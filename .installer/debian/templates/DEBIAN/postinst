@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# source debconf library
+source /usr/share/debconf/confmodule
+
 set -e
 set -o pipefail
 
@@ -45,6 +49,11 @@ add_group() {
   fi
 }
 
+get_username_from_debconf(){
+  db_get meshblu-connector-pm2/username || return $?
+  echo -n "$RET"
+}
+
 start_service () {
   : "${1:?'Service name was not defined'}"
   declare -r service_name="$1"
@@ -77,6 +86,7 @@ start_service () {
 }
 
 username="$MESHBLU_CONNECTOR_PM2_USERNAME"
+username="${username:-"$(get_username_from_debconf)"}"
 
 if [ -z "$username" ]; then
   echo ""
