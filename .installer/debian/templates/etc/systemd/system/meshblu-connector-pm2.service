@@ -1,6 +1,6 @@
 [Unit]
 Description=Meshblu Connector PM2
-Requires=network.target
+Requires=network-online.target
 
 [Service]
 Type=forking
